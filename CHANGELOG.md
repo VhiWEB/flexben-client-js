@@ -9,12 +9,12 @@
 - Add module interface to store all typescript types from storage data or from anywhere else
 - Add authentication user method and request
 - Add some methods like
-	• Get all faqs
-	• Get all periods
-	• Get current period
-	• Get upcoming period 
-	• Get all benefits
-	• Get benefit based on period
+	- Get all faqs
+	- Get all periods
+	- Get current period
+	- Get upcoming period 
+	- Get all benefits
+	- Get benefit based on period
 - Add Graphql configuration method.
 - Add Graphql call method to request an api
 - Add environment conviguration 

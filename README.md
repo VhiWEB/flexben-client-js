@@ -1,82 +1,73 @@
-# Magami client js 
+# Flexben Product Client Js
 
-This library contains core functionalities needed to create a mini game campaign. 
+This library contains core functionalities needed for Flexben Product.
+
+## Getting Started
+
+1. Install flexben-client-js.
+2. Run `npm i flexben-client-js` or `yarn add flexben-client-js` to install the library.
+3. Configure environment variables
+
+## Setup .env file
+
+Create `.env` file on code editor similar to `.env.example` or copy the code below : (see [official docs](https://vitejs.dev/guide/env-and-mode.html))
+```
+VITE_API_URL=
+VITE_AUTH_CLIENT_ID=
+VITE_AUTH_CLIENT_SECRET=
+VITE_ENCRYPTOR_KEY=
+VITE_GRANT_TYPE=
+VITE_PROJECT_KEY=
+```
 
 ## Installing
 
+Next, you need to import this library into your application.
 ```
-$ npm i magami-client-js
-// or if you're using yarn
-$ yarn add magami-client-js
-```
+import Flexben from 'flexben-client-js';
 
-then you need to import this library into your application.
-
-```
-import Magami from 'magami-client-js';
-
-const magami = new Magami();
+const flexben = new Flexben();
 ```
 
-## Init using AppId 
-
+## Authentication 
 ```
-magami.init({
-    apiKey: 'example',
-    campaignSlug: 'example'
+flexben.authLogin({
+  username: "",
+  password: "",
+}).then(({ data: { accessToken: { access_token } } }) => {
+  flexben.init({ token: access_token })
 });
 ```
-## claiming coupon
+
+## Get All Faq
 ```
-magami.claim(coupon_code)
-```
-## welcome form
-```
-magami.welcomeForm({
-    coupon_code: 'example'
-    name: 'example',
-    phone: 0,
-    province_id: 'example',
-    district_id: 'example'
-})
+flexben.getFaq();
 ```
 
-## Redeem
+## Get Current Period
 ```
-magami.welcomeForm(redemption_id)
-```
-
-## validate winner
-```
-magami.validateWinner({
-    coupon_code: 'example'
-    phone: 082...
-})
+flexben.getCurrentPeriod();
 ```
 
-## winnerForm
+## Get Upcoming Period
 ```
-magami.winnerForm({
-    redemption_id: 'example',
-    email:'email@example.com',
-    id_number: 234232342342,
-    address: 'address example'
-})
+flexben.getUpcomingPeriod();
 ```
 
-## getWinner
+## Get All Benefits
 ```
-magami.getWinner()
-```
-## faq
+flexben.getAllBenefits();
 ```
 
-magami.faq()
-
-options
-
-you can search FAQ by passing string to FAQ method
-
-magami.faq('your search')
+## Get Benefit Based on Period
+```
+flexben.getDetailBenefits({
+  id: '23',
+});
 ```
 
+## Tools
+
+- **@apollo/client** : **^3.7.9** [https://www.apollographql.com/docs/react/)
+- **apollo-boost** : **^0.4.9** [https://www.npmjs.com/package/apollo-boost)
+- **graphql** : **^15.8.0** [https://graphql.org/)

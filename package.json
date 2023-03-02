@@ -49,7 +49,6 @@
   "dependencies": {
     "@apollo/client": "^3.7.9",
     "apollo-boost": "^0.4.9",
-    "graphql": "^15.8.0",
-    "qs": "^6.11.0"
+    "graphql": "^15.8.0"
   }
 }
