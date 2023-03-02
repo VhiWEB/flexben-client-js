@@ -1,164 +1,137 @@
-import { coreApi } from "./helpers/api"
-import { storeDataManagement } from "./utils/storage"
-import type { Init, UserData, Winner } from "./utils/model"
+import { apolloClient } from './config/apollo';
+import { storeDataManagement } from './utils/storage';
+import type { Init } from './utils/model';
+import config from './config/enviroment';
 
-export default class Magami {
+import { get_faqs } from './graphql/querys/faq-query';
+import { get_current_periods, get_periods, get_upcoming_periods } from './graphql/querys/period-query';
+import { get_all_benefit_items, get_period_benefit_items } from './graphql/querys/benefit-query';
 
-    private storage = storeDataManagement()
+import { login_mutation } from './graphql/mutations/auth-mutations';
 
-    private get apiKey() {
-        return this.storage.getApiKey()
-    }
+import { DetailBenefitType } from './types/benefit';
+import { LoginPayloadType } from './types/auth';
 
-    private get campaignSlug() {
-        return this.storage.getCampaignSlug()
-    }
+export default class Flexben {
+	private storage = storeDataManagement();
 
-    init({ apiKey, campaignSlug }: Init): void {
-        this.storage.setApiKey(apiKey)
-        this.storage.setCampaignSlug(campaignSlug)
-    }
+	private get authToken() {
+		return this.storage.getAuthToken();
+	}
 
-    // setup authorization for headers
-    private async apiCall(method: string, resource: string, body?: Record<string, unknown>) {
-        const auth = this.apiKey;
-        const slug = this.campaignSlug;
+	init({ token }: Init): void {
+		this.storage.setAuthToken(token);
+	}
 
-        try {
-            const response = await coreApi(method, resource, auth, slug, body)
-            if (response) {
-                const data = await response.json()
-                return data;
-            }
-        } catch (error) {
-            return error
-        }
-    }
+	async authLogin({ username, password }: LoginPayloadType): Promise<LoginPayloadType | any> {
+		try {
+			const loginMutate = apolloClient().mutate({
+				mutation: login_mutation,
+				variables: {
+					clientId: config.api.VITE_AUTH_CLIENT_ID,
+					clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
+					username: username,
+					password: password,
+					grantType: config.api.VITE_GRANT_TYPE,
+				},
+			});
+			return loginMutate;
+		} catch (err) {
+			return err;
+		}
+	}
 
-    async claim(couponCode: string) {
+	async getFaq() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_faqs,
+			});
+			if (response) {
+				return response;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 
-        try {
-            const response = await this.apiCall('GET', `claim/${couponCode}`);
-            if (response) {
-                this.storage.setCouponCode(couponCode)
-                return response;
-            } else {
-                throw new Error;
-            }
-        } catch (error) {
-            return error;
-        }
-    }
+	async getPeriods() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_periods,
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 
-    async welcomeForm({
-        coupon_code,
-        name,
-        phone,
-        province_id,
-        city_id,
-        district_id }: UserData): Promise<UserData | any> {
-        const payload = {
-            coupon_code,
-            name,
-            phone,
-            province_id,
-            city_id,
-            district_id
-        }
-        try {
-            const response = await this.apiCall('POST', `campaigns/${this.campaignSlug}/welcome/submit`, {
-                ...payload
-            })
+	async getCurrentPeriod() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_current_periods,
+				variables: {},
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 
-            if (response) {
-                return response
-            } else {
-                throw new Error
-            }
-        } catch (error) {
-            return error
-        }
-    }
+	async getUpcomingPeriod() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_upcoming_periods,
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 
-    async redeem(redemptionId: string) {
-        try {
+	async getAllBenefits() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_all_benefit_items,
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 
-            const response = await this.apiCall('GET', `campaigns/${this.campaignSlug}/redeem/${redemptionId}`)
-
-            if (response) {
-                return response
-            } else {
-                throw new Error;
-
-            }
-
-        } catch (error) {
-            return error
-        }
-    }
-
-    async validateWinner({ coupon_code, phone }: UserData) {
-        try {
-            const response = await this.apiCall('POST', `campaigns/${this.campaignSlug}/winner/validate`, {
-                coupon_code,
-                phone,
-            })
-
-            if (response) {
-                return response
-            }
-
-        } catch (error) {
-            return error
-        }
-    }
-
-    async winnerForm({ redemption_id, email, id_number, address }: Winner) {
-        try {
-            const response = await this.apiCall('POST', `campaigns/${this.campaignSlug}/winner/submit`, {
-                redemption_id,
-                email,
-                id_number,
-                address
-            })
-
-            if (response) {
-                return response
-            }
-
-        } catch (error) {
-            return error
-        }
-    }
-
-    async getWinner() {
-        try {
-
-            const response = await this.apiCall('GET', `campaigns/${this.campaignSlug}/winner/list`,)
-
-            if (response) {
-                return response
-            }
-
-        } catch (error) {
-            return error
-        }
-    }
-
-    async faq(searchKey?: string | number | any) {
-        try {
-            const reqUrl = `campaigns/${this.campaignSlug}/faq`
-
-            searchKey && reqUrl.concat(`?search=${searchKey}`)
-
-            const response = await this.apiCall('POST', `${reqUrl}`)
-
-            if (response) {
-                return response
-            }
-
-        } catch (error) {
-            return error
-        }
-    }
+	async getDetailBenefits({ id }: DetailBenefitType) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_period_benefit_items,
+				variables: {
+					period_id: id,
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
 }

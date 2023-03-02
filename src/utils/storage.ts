@@ -1,6 +1,3 @@
-import type { UserData } from "./model"
-
-
 export const storeDataManagement = () => {
     const store: Record<string, any> = {}
 
@@ -18,18 +15,7 @@ export const storeDataManagement = () => {
 
     return ({
         // initialinze
-        getApiKey: Getter<string>('appId'),
-        setApiKey: Setter<string>('appId'),
-        getCampaignSlug: Getter<string>('uniqueKey'),
-        setCampaignSlug: Setter<string>('uniqueKey'),
-
-        // user information
-        setUserData: Setter<UserData>('userData'),
-        getUserData: Getter<UserData>('userData'),
-
-        //set coupon code
-        setCouponCode: Setter<string>('couponCode'),
-        getCouponCode: Getter<string>('couponCode')
-
+        getAuthToken: Getter<string>('token'),
+        setAuthToken: Setter<string>('token'),
     })
 }

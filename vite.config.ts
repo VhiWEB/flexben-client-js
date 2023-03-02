@@ -13,6 +13,7 @@ export default defineConfig({
                 find: "~",
                 replacement: path.resolve(__dirname, "./src"),
             },
+
         ],
     },
     server: {
@@ -28,7 +29,7 @@ export default defineConfig({
             formats: ["es", "cjs"],
         },
         rollupOptions: {
-            external: [],
+            external: ["react"],
             plugins: [
                 typescriptPaths({
                     preserveExtensions: true,

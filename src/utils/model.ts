@@ -1,6 +1,5 @@
 export interface Init {
-    apiKey: string | undefined | any
-    campaignSlug: string | undefined | any
+    token: string | undefined | any
 }
 
 export interface UserData {
