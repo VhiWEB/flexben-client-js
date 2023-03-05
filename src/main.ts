@@ -12,7 +12,10 @@ import { login_mutation } from './graphql/mutations/auth-mutations';
 import { DetailBenefitType } from './types/benefit';
 import { AuthInputType } from './types/auth';
 import { get_detail_enrollment, get_enrollments } from './graphql/querys/enrollment-query';
-import { EnrollmentType } from './types';
+import { ClaimCategoryPaginatorType, ClaimListPaginator, ClaimType, EnrollmentType } from './types';
+import { get_claims, get_claim_categories, get_detail_claim } from './graphql/querys/claim-query';
+import { get_user } from './graphql/querys/user-query';
+import { get_point } from './graphql/querys/point-query';
 
 export default class Flexben {
 	private storage = storeDataManagement();
@@ -169,4 +172,91 @@ export default class Flexben {
 			return error;
 		}
 	}
+
+	async getClaims({ period_id, first, page }: ClaimListPaginator) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_claims,
+				variables: {
+					period_id: period_id,
+					first: first,
+					page: page,
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async getDetailClaim({ id }: ClaimType) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_detail_claim,
+				variables: {
+					id: id,
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async getClaimCategories({ parent_id, isParent }: ClaimCategoryPaginatorType) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_claim_categories,
+				variables: {
+					parent_id: parent_id,
+					isParent: isParent
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async getUser() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_user,
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	// async getPoint() {
+	// 	try {
+	// 		const response = await apolloClient(this.authToken).query({
+	// 			query: get_point,
+	// 		});
+	// 		if (response) {
+	// 			return response.data;
+	// 		} else {
+	// 			throw new Error();
+	// 		}
+	// 	} catch (error) {
+	// 		return error;
+	// 	}
+	// }
 }

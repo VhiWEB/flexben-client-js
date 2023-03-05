@@ -13,3 +13,11 @@ export type ClaimCategoryType = {
 	updated_at: Date;
 	parent?: ClaimCategoryType[];
 };
+
+export type ClaimCategoryPaginatorType = {
+	parent_id?: string | number;
+	isParent: boolean,
+	isActive: boolean,
+	first: number,
+	page: number,
+};

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 /*** PAGINATOR FRAGMENT ***/
 export const paginatorFragment = gql`
@@ -227,4 +227,20 @@ export const detailEnrollmentsFragment = gql`
 		submitted_at
 	}
 	${periodFragment}, ${benefitItemsFragment}, ${userFragment}
+`;
+
+/*** POINT FRAGMENT ***/
+export const pointFragment = gql`
+	fragment pointPart on Point {
+		id
+		user {
+			...userPart
+		}
+		period {
+			...periodPart
+		}
+		created_at
+		updated_at
+	}
+	${periodFragment}, ${userFragment}
 `;

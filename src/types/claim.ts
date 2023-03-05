@@ -55,6 +55,14 @@ export type ClaimPayloadUpdateType = {
 	documents?: { create: AttachmentPayloadType[] };
 };
 
+export type ClaimListPaginator = {
+	period_id: string | number;
+	category_id: string;
+	claim_status: string;
+	first: number;
+	page: number;
+};
+
 export type ClaimPaginator = {
 	paginatorInfo: PaginatorType;
 	data: ClaimType[];
