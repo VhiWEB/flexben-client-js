@@ -8,18 +8,7 @@ export type BenefitItemsType = {
 	flex_type: string;
 	status: string;
 	primary_price: string;
-	benefit?: {
-		code: string;
-		created_at: string;
-		description: string;
-		id: string;
-		is_active: boolean;
-		is_factorable: boolean;
-		is_optional: boolean;
-		name: string;
-		updated_at: string;
-		__typename: string;
-	};
+	benefit?: BenefitType;
 	pivot: {
 		point: number;
 	};

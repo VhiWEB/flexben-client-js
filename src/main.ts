@@ -10,7 +10,9 @@ import { get_all_benefit_items, get_period_benefit_items } from './graphql/query
 import { login_mutation } from './graphql/mutations/auth-mutations';
 
 import { DetailBenefitType } from './types/benefit';
-import { LoginPayloadType } from './types/auth';
+import { AuthInputType } from './types/auth';
+import { get_detail_enrollment, get_enrollments } from './graphql/querys/enrollment-query';
+import { EnrollmentType } from './types';
 
 export default class Flexben {
 	private storage = storeDataManagement();
@@ -23,7 +25,7 @@ export default class Flexben {
 		this.storage.setAuthToken(token);
 	}
 
-	async authLogin({ username, password }: LoginPayloadType): Promise<LoginPayloadType | any> {
+	async authLogin({ username, password }: AuthInputType): Promise<AuthInputType | any> {
 		try {
 			const loginMutate = apolloClient().mutate({
 				mutation: login_mutation,
@@ -117,10 +119,43 @@ export default class Flexben {
 		}
 	}
 
-	async getDetailBenefits({ id }: DetailBenefitType) {
+	async getPeriodBenefits({ id }: DetailBenefitType) {
 		try {
 			const response = await apolloClient(this.authToken).query({
 				query: get_period_benefit_items,
+				variables: {
+					period_id: id,
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async getEnrollment() {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_enrollments,
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async getDetailEnrollment({ id }: EnrollmentType) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_detail_enrollment,
 				variables: {
 					period_id: id,
 				}
