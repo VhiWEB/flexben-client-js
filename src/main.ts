@@ -188,7 +188,6 @@ export default class Flexben {
 		try {
 			const response = await apolloClient(this.authToken).query({
 				query: get_current_periods,
-				variables: {},
 			});
 			if (response) {
 				return response.data;
@@ -248,7 +247,7 @@ export default class Flexben {
 		}
 	}
 
-	async getEnrollment() {
+	async getEnrollments() {
 		try {
 			const response = await apolloClient(this.authToken).query({
 				query: get_enrollments,
