@@ -67,6 +67,19 @@ export const benefitItemsFragment = gql`
 	${benefitFragment}
 `;
 
+/*** COMPANY FRAGMENT ***/
+export const companyFragment = gql`
+	fragment companyPart on Company {
+		id
+		name
+		code
+		benefits {
+			...benefitPart
+		}
+	}
+	${benefitFragment}
+`;
+
 /*** USER FRAGMENT ***/
 export const userFragment = gql`
 	fragment userPart on User {
@@ -82,19 +95,16 @@ export const userFragment = gql`
 		marital_status
 		created_at
 		updated_at
+		birth_date
+		hire_date
 		avatar {
 			...filePart
 		}
 		company {
-			id
-			name
-			code
-			benefits {
-				...benefitPart
-			}
+			...companyPart
 		}
 	}
-	${benefitFragment}, ${fileFragment}
+	${companyFragment}, ${fileFragment}
 `;
 
 /*** CLAIM CATEGORY PARENT FRAGMENT ***/
@@ -247,10 +257,14 @@ export const pointFragment = gql`
 
 /*** AUTH FRAGMENT ***/
 export const authFragment = gql`
-	fragment authPart on Auth {
+	fragment authPart on AuthToken {
 		access_token
 		refresh_token
 		expires_in
 		token_type
+		user {
+			...userPart
+		}
 	}
+	${userFragment}
 `;
