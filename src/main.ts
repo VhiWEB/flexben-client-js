@@ -13,8 +13,10 @@ import { get_detail_enrollment, get_enrollments } from './graphql/querys/enrollm
 
 import { forgot_password_mutation, login_mutation, reset_password_mutation } from './graphql/mutations/auth-mutations';
 import { change_password_mutation, update_user_mutation } from './graphql/mutations/user-mutation';
+import { create_claim, delete_claim, update_claim } from './graphql/mutations/claim-mutation';
+import { post_enrollment_mutation } from './graphql/mutations/enrollment-mutation';
 
-import { DetailBenefitType, AuthInputType, ChangePasswordPayloadType, ClaimCategoryPaginatorType, ClaimListPaginator, ClaimType, EnrollmentPaylodType, EnrollmentType, ForgotPasswordPayloadType, ResetPasswordPayloadType, AuthUpdateType } from './types';
+import { DetailBenefitType, AuthInputType, ChangePasswordPayloadType, ClaimCategoryPaginatorType, ClaimListPaginator, ClaimType, EnrollmentPaylodType, EnrollmentType, ForgotPasswordPayloadType, ResetPasswordPayloadType, AuthUpdateType, ClaimPayloadType, ClaimPayloadUpdateType } from './types';
 
 export default class Flexben {
 	private storage = storeDataManagement();
@@ -99,7 +101,7 @@ export default class Flexben {
 
 	async authChangePassword({ current_password, password, password_confirmation }: ChangePasswordPayloadType): Promise<ChangePasswordPayloadType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient(this.authToken).mutate({
 				mutation: change_password_mutation,
 				variables: {
 					current_password: current_password,
@@ -115,7 +117,7 @@ export default class Flexben {
 
 	async authUpdateUser({ name, email, phone, password, password_confirmation, gender, birth_at, avatar }: AuthUpdateType): Promise<AuthUpdateType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient(this.authToken).mutate({
 				mutation: update_user_mutation,
 				variables: {
 					name: name,
@@ -264,7 +266,7 @@ export default class Flexben {
 	async createEnrollment({ id, period_id, is_submitted, benefit_items_ids }: EnrollmentPaylodType) {
 		try {
 			const response = await apolloClient(this.authToken).query({
-				query: get_detail_enrollment,
+				query: post_enrollment_mutation,
 				variables: {
 					id: id,
 					period_id: period_id,
@@ -317,6 +319,65 @@ export default class Flexben {
 			}
 		} catch (error) {
 			return error;
+		}
+	}
+
+	async createClaim({ name, merchant_name, description, amount, period_id, category_id, transaction_at, receipt, documents }: ClaimPayloadType): Promise<ClaimPayloadType | any> {
+		try {
+			const mutation = apolloClient(this.authToken).mutate({
+				mutation: create_claim,
+				variables: {
+					name: name,
+					merchant_name: merchant_name,
+					description: description,
+					amount: amount,
+					period_id: period_id,
+					category_id: category_id,
+					transaction_at: transaction_at,
+					receipt: receipt,
+					documents: documents,
+				},
+			});
+			return mutation;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async updateClaim({ id, name, merchant_name, description, amount, period_id, category_id, transaction_at, receipt, documents }: ClaimPayloadUpdateType): Promise<ClaimPayloadUpdateType | any> {
+		try {
+			const mutation = apolloClient(this.authToken).mutate({
+				mutation: update_claim,
+				variables: {
+					id: id,
+					name: name,
+					merchant_name: merchant_name,
+					description: description,
+					amount: amount,
+					period_id: period_id,
+					category_id: category_id,
+					transaction_at: transaction_at,
+					receipt: receipt,
+					documents: documents,
+				},
+			});
+			return mutation;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async deleteClaim({ id }: ClaimType): Promise<ClaimType | any> {
+		try {
+			const mutation = apolloClient(this.authToken).mutate({
+				mutation: delete_claim,
+				variables: {
+					id: id,
+				},
+			});
+			return mutation;
+		} catch (err) {
+			return err;
 		}
 	}
 

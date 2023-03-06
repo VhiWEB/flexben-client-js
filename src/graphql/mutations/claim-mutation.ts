@@ -1,9 +1,31 @@
 import { gql } from '@apollo/client';
 import { claimFragment } from '../fragments/fragments';
 
-export const delete_claim = gql`
-	mutation deleteClaim($id: ID!) {
-		claimDelete(id: $id) {
+export const create_claim = gql`
+	mutation createClaim(
+		$name: String
+		$merchant_name: String
+		$description: String
+		$amount: String
+		$period_id: Int
+		$category_id: Int
+		$transaction_at: DateTime
+		$receipt: AttachFileHasOne
+		$documents: AttachFileHasMany
+	) {
+		claimCreate(
+			input: {
+				name: $name
+				merchant_name: $merchant_name
+				description: $description
+				amount: $amount
+				period_id: $period_id
+				category_id: $category_id
+				transaction_at: $transaction_at
+				receipt: $receipt
+				documents: $documents
+			}
+		) {
 			...claimPart
 		}
 	}
@@ -12,27 +34,27 @@ export const delete_claim = gql`
 
 export const update_claim = gql`
 	mutation updateClaim(
-		$idClaim: ID!
+		$id: ID!
 		$name: String
-		$merchantName: String
+		$merchant_name: String
 		$description: String
 		$amount: String
-		$periodId: Int
-		$categoryId: Int
-		$transactionAt: DateTime
+		$period_id: Int
+		$category_id: Int
+		$transaction_at: DateTime
 		$receipt: AttachFileHasOne
 		$documents: AttachFileHasMany
 	) {
 		claimUpdate(
-			id: $idClaim,
+			id: $id,
 			input: {
 				name: $name
-				merchant_name: $merchantName
+				merchant_name: $merchant_name
 				description: $description
 				amount: $amount
-				period_id: $periodId
-				category_id: $categoryId
-				transaction_at: $transactionAt
+				period_id: $period_id
+				category_id: $category_id
+				transaction_at: $transaction_at
 				receipt: $receipt
 				documents: $documents
 			}
@@ -43,31 +65,9 @@ export const update_claim = gql`
 	${claimFragment}
 `;
 
-export const create_claim = gql`
-	mutation createClaim(
-		$name: String
-		$merchantName: String
-		$description: String
-		$amount: String
-		$periodId: Int
-		$categoryId: Int
-		$transactionAt: DateTime
-		$receipt: AttachFileHasOne
-		$documents: AttachFileHasMany
-	) {
-		claimCreate(
-			input: {
-				name: $name
-				merchant_name: $merchantName
-				description: $description
-				amount: $amount
-				period_id: $periodId
-				category_id: $categoryId
-				transaction_at: $transactionAt
-				receipt: $receipt
-				documents: $documents
-			}
-		) {
+export const delete_claim = gql`
+	mutation deleteClaim($id: ID!) {
+		claimDelete(id: $id) {
 			...claimPart
 		}
 	}
