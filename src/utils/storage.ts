@@ -17,5 +17,17 @@ export const storeDataManagement = () => {
         // initialinze
         getAuthToken: Getter<string>('token'),
         setAuthToken: Setter<string>('token'),
+
+        getClientId: Getter<string>('clientId'),
+        setClientId: Setter<string>('clientId'),
+
+        getClientSecret: Getter<string>('clientSecret'),
+        setClientSecret: Setter<string>('clientSecret'),
+
+        getGrantType: Getter<string>('grantType'),
+        setGrantType: Setter<string>('grantType'),
+
+        getApiKey: Getter<string>('apiKey'),
+        setApiKey: Setter<string>('apiKey'),
     })
 }

@@ -1,7 +1,7 @@
 import { apolloClient } from './config/apollo';
 import { storeDataManagement } from './utils/storage';
 import type { Init } from './utils/model';
-import config from './config/enviroment';
+// import config from './config/enviroment';
 
 import { get_faqs } from './graphql/querys/faq-query';
 import { get_user } from './graphql/querys/user-query';
@@ -25,7 +25,25 @@ export default class Flexben {
 		return this.storage.getAuthToken();
 	}
 
-	init({ token }: Init): void {
+	private get clientId() {
+		return this.storage.getClientId();
+	}
+
+	private get clientSecret() {
+		return this.storage.getClientSecret();
+	}
+
+	private get grantType() {
+		return this.storage.getGrantType();
+	}
+
+	init({ clientId, clientSecret, grantType }: Init): void {
+		this.storage.setClientId(clientId);
+		this.storage.setClientSecret(clientSecret);
+		this.storage.setGrantType(grantType);
+	}
+
+	setToken({ token }: Init): void {
 		this.storage.setAuthToken(token);
 	}
 
@@ -34,11 +52,11 @@ export default class Flexben {
 			const mutation = apolloClient().mutate({
 				mutation: login_mutation,
 				variables: {
-					clientId: config.api.VITE_AUTH_CLIENT_ID,
-					clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
+					clientId: this.clientId,
+					clientSecret: this.clientSecret,
 					username: username,
 					password: password,
-					grantType: config.api.VITE_GRANT_TYPE,
+					grantType: this.grantType,
 				},
 			});
 			return mutation;
@@ -52,15 +70,15 @@ export default class Flexben {
 			const mutation = apolloClient().mutate({
 				mutation: login_mutation,
 				variables: {
-					clientId: config.api.VITE_AUTH_CLIENT_ID,
-					clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
+					clientId: this.clientId,
+					clientSecret: this.clientSecret,
 					name: name,
 					email: email,
 					phone: phone,
 					username: username,
 					password: password,
 					password_confirmation: password_confirmation,
-					grantType: config.api.VITE_GRANT_TYPE,
+					grantType: this.grantType,
 				},
 			});
 			return mutation;

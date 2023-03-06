@@ -1,20 +1,6 @@
 export interface Init {
-    token: string | undefined | any
-}
-
-export interface UserData {
-    coupon_code?: string | any
-    name?: string
-    phone?: string | number
-    province_id?: string | number
-    city_id?: string | number
-    district_id?: string | number | any
-    id_number: string | number
-    address: string
-    email: string
-}
-
-
-export interface Winner extends UserData {
-    redemption_id: string | number
+    token: string | undefined | any,
+    clientId: string | undefined | any,
+    clientSecret: string | undefined | any,
+    grantType: string | undefined | any,
 }
