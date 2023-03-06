@@ -1,10 +1,10 @@
 {
-  "name": "@vhiweb/magami-client-js",
+  "name": "@vhiweb/flexben-client-js",
   "private": false,
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VhiWEB/magami-client-js.git"
+    "url": "https://github.com/VhiWEB/flexben-client-js.git"
   },
   "exports": {
     ".": {
@@ -17,9 +17,9 @@
   },
   "contributors": [
     {
-      "name": "Syaiful Fahmi",
-      "email": "s.fahmii29@gmail.com",
-      "url": "https://github.com/sfhmi"
+      "name": "Hatta Alfaritzy",
+      "email": "muh.hara16@gmail.com",
+      "url": "https://github.com/hattaalfaritzy"
     }
   ],
   "main": "./dist/main.js",
@@ -45,6 +45,10 @@
     "typescript": "^4.9.5",
     "vite": "^4.0.0",
     "vitest": "^0.28.3"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.9",
+    "apollo-boost": "^0.4.9",
+    "graphql": "^15.8.0"
   }
-  
 }
