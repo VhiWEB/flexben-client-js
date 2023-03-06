@@ -244,3 +244,13 @@ export const pointFragment = gql`
 	}
 	${periodFragment}, ${userFragment}
 `;
+
+/*** AUTH FRAGMENT ***/
+export const authFragment = gql`
+	fragment authPart on Auth {
+		access_token
+		refresh_token
+		expires_in
+		token_type
+	}
+`;

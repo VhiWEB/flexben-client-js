@@ -6,16 +6,15 @@ import config from './config/enviroment';
 import { get_faqs } from './graphql/querys/faq-query';
 import { get_current_periods, get_periods, get_upcoming_periods } from './graphql/querys/period-query';
 import { get_all_benefit_items, get_period_benefit_items } from './graphql/querys/benefit-query';
-
-import { login_mutation } from './graphql/mutations/auth-mutations';
+import { change_password_mutation, forgot_password_mutation, login_mutation, reset_password_mutation } from './graphql/mutations/auth-mutations';
 
 import { DetailBenefitType } from './types/benefit';
 import { AuthInputType } from './types/auth';
 import { get_detail_enrollment, get_enrollments } from './graphql/querys/enrollment-query';
-import { ClaimCategoryPaginatorType, ClaimListPaginator, ClaimType, EnrollmentType } from './types';
+import { ChangePasswordPayloadType, ClaimCategoryPaginatorType, ClaimListPaginator, ClaimType, EnrollmentPaylodType, EnrollmentType, ForgotPasswordPayloadType, ResetPasswordPayloadType } from './types';
 import { get_claims, get_claim_categories, get_detail_claim } from './graphql/querys/claim-query';
 import { get_user } from './graphql/querys/user-query';
-import { get_point } from './graphql/querys/point-query';
+// import { get_point } from './graphql/querys/point-query';
 
 export default class Flexben {
 	private storage = storeDataManagement();
@@ -38,6 +37,74 @@ export default class Flexben {
 					username: username,
 					password: password,
 					grantType: config.api.VITE_GRANT_TYPE,
+				},
+			});
+			return loginMutate;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async authRegister({ name, email, phone, username, password, password_confirmation }: AuthInputType): Promise<AuthInputType | any> {
+		try {
+			const loginMutate = apolloClient().mutate({
+				mutation: login_mutation,
+				variables: {
+					clientId: config.api.VITE_AUTH_CLIENT_ID,
+					clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
+					name: name,
+					email: email,
+					phone: phone,
+					username: username,
+					password: password,
+					password_confirmation: password_confirmation,
+					grantType: config.api.VITE_GRANT_TYPE,
+				},
+			});
+			return loginMutate;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async authForgotPassword({ email, url }: ForgotPasswordPayloadType): Promise<ForgotPasswordPayloadType | any> {
+		try {
+			const loginMutate = apolloClient().mutate({
+				mutation: forgot_password_mutation,
+				variables: {
+					email: email,
+					url: url,
+				},
+			});
+			return loginMutate;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async authResetPassword({ code, password }: ResetPasswordPayloadType): Promise<ResetPasswordPayloadType | any> {
+		try {
+			const loginMutate = apolloClient().mutate({
+				mutation: reset_password_mutation,
+				variables: {
+					code: code,
+					password: password,
+				},
+			});
+			return loginMutate;
+		} catch (err) {
+			return err;
+		}
+	}
+
+	async authChangePassword({ current_password, password, password_confirmation }: ChangePasswordPayloadType): Promise<ChangePasswordPayloadType | any> {
+		try {
+			const loginMutate = apolloClient().mutate({
+				mutation: change_password_mutation,
+				variables: {
+					current_password: current_password,
+					password: password,
+					password_confirmation: password_confirmation
 				},
 			});
 			return loginMutate;
@@ -161,6 +228,27 @@ export default class Flexben {
 				query: get_detail_enrollment,
 				variables: {
 					period_id: id,
+				}
+			});
+			if (response) {
+				return response.data;
+			} else {
+				throw new Error();
+			}
+		} catch (error) {
+			return error;
+		}
+	}
+
+	async createEnrollment({ id, period_id, is_submitted, benefit_items_ids }: EnrollmentPaylodType) {
+		try {
+			const response = await apolloClient(this.authToken).query({
+				query: get_detail_enrollment,
+				variables: {
+					id: id,
+					period_id: period_id,
+					is_submitted: is_submitted,
+					benefit_items_ids: benefit_items_ids
 				}
 			});
 			if (response) {

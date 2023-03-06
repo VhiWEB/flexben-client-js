@@ -32,13 +32,18 @@ export type ForgotMessageType = {
 
 export type ForgotPasswordPayloadType = {
 	email: Required<string>;
-	url: string;
+	url: Required<string>;
 }; 	
 
 export type ChangePasswordPayloadType = {
-	current_confirmation: Required<string>;
-	password: string;
-	password_confirmation: string;
+	current_password: Required<string>;
+	password: Required<string>;
+	password_confirmation: Required<string>;
+};
+
+export type ResetPasswordPayloadType = {
+	code: Required<string>;
+	password: Required<string>;
 };
 
 export type AuthUpdateType = {
