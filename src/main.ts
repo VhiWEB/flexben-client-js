@@ -21,6 +21,10 @@ import { DetailBenefitType, AuthInputType, ChangePasswordPayloadType, ClaimCateg
 export default class Flexben {
 	private storage = storeDataManagement();
 
+	private get apiKey() {
+		return this.storage.getApiKey();
+	}
+
 	private get authToken() {
 		return this.storage.getAuthToken();
 	}
@@ -37,10 +41,11 @@ export default class Flexben {
 		return this.storage.getGrantType();
 	}
 
-	init({ clientId, clientSecret, grantType }: Init): void {
+	init({ clientId, clientSecret, grantType, apiKey }: Init): void {
 		this.storage.setClientId(clientId);
 		this.storage.setClientSecret(clientSecret);
 		this.storage.setGrantType(grantType);
+		this.storage.setApiKey(apiKey);
 	}
 
 	setToken({ token }: Init): void {
@@ -49,7 +54,7 @@ export default class Flexben {
 
 	async authLogin({ username, password }: AuthInputType): Promise<AuthInputType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey }).mutate({
 				mutation: login_mutation,
 				variables: {
 					clientId: this.clientId,
@@ -67,7 +72,7 @@ export default class Flexben {
 
 	async authRegister({ name, email, phone, username, password, password_confirmation }: AuthInputType): Promise<AuthInputType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey }).mutate({
 				mutation: login_mutation,
 				variables: {
 					clientId: this.clientId,
@@ -89,7 +94,7 @@ export default class Flexben {
 
 	async authForgotPassword({ email, url }: ForgotPasswordPayloadType): Promise<ForgotPasswordPayloadType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey }).mutate({
 				mutation: forgot_password_mutation,
 				variables: {
 					email: email,
@@ -104,7 +109,7 @@ export default class Flexben {
 
 	async authResetPassword({ code, password }: ResetPasswordPayloadType): Promise<ResetPasswordPayloadType | any> {
 		try {
-			const mutation = apolloClient().mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey }).mutate({
 				mutation: reset_password_mutation,
 				variables: {
 					code: code,
@@ -119,7 +124,7 @@ export default class Flexben {
 
 	async authChangePassword({ current_password, password, password_confirmation }: ChangePasswordPayloadType): Promise<ChangePasswordPayloadType | any> {
 		try {
-			const mutation = apolloClient(this.authToken).mutate({
+			const mutation = apolloClient({ token: this.authToken}).mutate({
 				mutation: change_password_mutation,
 				variables: {
 					current_password: current_password,
@@ -135,7 +140,7 @@ export default class Flexben {
 
 	async authUpdateUser({ name, email, phone, password, password_confirmation, gender, birth_at, avatar }: AuthUpdateType): Promise<AuthUpdateType | any> {
 		try {
-			const mutation = apolloClient(this.authToken).mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey, token: this.authToken }).mutate({
 				mutation: update_user_mutation,
 				variables: {
 					name: name,
@@ -156,7 +161,7 @@ export default class Flexben {
 
 	async getFaq() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_faqs,
 			});
 			if (response) {
@@ -171,7 +176,7 @@ export default class Flexben {
 
 	async getPeriods() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_periods,
 			});
 			if (response) {
@@ -186,7 +191,7 @@ export default class Flexben {
 
 	async getCurrentPeriod() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_current_periods,
 			});
 			if (response) {
@@ -201,7 +206,7 @@ export default class Flexben {
 
 	async getUpcomingPeriod() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_upcoming_periods,
 			});
 			if (response) {
@@ -216,7 +221,7 @@ export default class Flexben {
 
 	async getAllBenefits() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_all_benefit_items,
 			});
 			if (response) {
@@ -231,7 +236,7 @@ export default class Flexben {
 
 	async getPeriodBenefits({ id }: DetailBenefitType) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_period_benefit_items,
 				variables: {
 					period_id: id,
@@ -249,7 +254,7 @@ export default class Flexben {
 
 	async getEnrollments() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_enrollments,
 			});
 			if (response) {
@@ -264,7 +269,7 @@ export default class Flexben {
 
 	async getDetailEnrollment({ id }: EnrollmentType) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_detail_enrollment,
 				variables: {
 					period_id: id,
@@ -282,7 +287,7 @@ export default class Flexben {
 
 	async createEnrollment({ id, period_id, is_submitted, benefit_items_ids }: EnrollmentPaylodType) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: post_enrollment_mutation,
 				variables: {
 					id: id,
@@ -303,7 +308,7 @@ export default class Flexben {
 
 	async getClaims({ period_id, first, page }: ClaimListPaginator) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_claims,
 				variables: {
 					period_id: period_id,
@@ -323,7 +328,7 @@ export default class Flexben {
 
 	async getDetailClaim({ id }: ClaimType) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_detail_claim,
 				variables: {
 					id: id,
@@ -341,7 +346,7 @@ export default class Flexben {
 
 	async createClaim({ name, merchant_name, description, amount, period_id, category_id, transaction_at, receipt, documents }: ClaimPayloadType): Promise<ClaimPayloadType | any> {
 		try {
-			const mutation = apolloClient(this.authToken).mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey, token: this.authToken }).mutate({
 				mutation: create_claim,
 				variables: {
 					name: name,
@@ -363,7 +368,7 @@ export default class Flexben {
 
 	async updateClaim({ id, name, merchant_name, description, amount, period_id, category_id, transaction_at, receipt, documents }: ClaimPayloadUpdateType): Promise<ClaimPayloadUpdateType | any> {
 		try {
-			const mutation = apolloClient(this.authToken).mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey, token: this.authToken }).mutate({
 				mutation: update_claim,
 				variables: {
 					id: id,
@@ -386,7 +391,7 @@ export default class Flexben {
 
 	async deleteClaim({ id }: ClaimType): Promise<ClaimType | any> {
 		try {
-			const mutation = apolloClient(this.authToken).mutate({
+			const mutation = apolloClient({ apiUrl: this.apiKey, token: this.authToken }).mutate({
 				mutation: delete_claim,
 				variables: {
 					id: id,
@@ -400,7 +405,7 @@ export default class Flexben {
 
 	async getClaimCategories({ parent_id, isParent }: ClaimCategoryPaginatorType) {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_claim_categories,
 				variables: {
 					parent_id: parent_id,
@@ -419,7 +424,7 @@ export default class Flexben {
 
 	async getUser() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_user,
 			});
 			if (response) {
@@ -434,7 +439,7 @@ export default class Flexben {
 
 	async getPoint() {
 		try {
-			const response = await apolloClient(this.authToken).query({
+			const response = await apolloClient({ apiUrl: this.apiKey, token: this.authToken }).query({
 				query: get_point,
 			});
 			if (response) {

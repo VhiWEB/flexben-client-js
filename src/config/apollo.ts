@@ -1,10 +1,9 @@
 import ApolloClient from 'apollo-boost';
-import config from '../config/enviroment';
 
-export const apolloClient = (token: string | null = null) => {
+export const apolloClient = ({ apiUrl, token }: Config) => {
 	return new ApolloClient({
-		uri: config.api.VITE_API_URL || 'https://flexben-product.stg.embrio.id/graphql',
-		request: (operation) => {
+		uri: apiUrl || 'https://api.flexben.id/graphql',
+		request: (operation: any) => {
 			if (token) {
 				operation.setContext({
 					headers: {
@@ -14,4 +13,9 @@ export const apolloClient = (token: string | null = null) => {
 			}
 		},
 	})
+}
+
+interface Config {
+    apiUrl?: string;
+    token?: string | null;
 }

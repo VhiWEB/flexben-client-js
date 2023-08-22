@@ -3,4 +3,5 @@ export interface Init {
     clientId: string | undefined | any,
     clientSecret: string | undefined | any,
     grantType: string | undefined | any,
+    apiKey: string | undefined | any,
 }
