@@ -1,4 +1,5 @@
 
+<!-- Read me -->
  # Getting Started
 This library contains core functionalities needed for Flexben Product.
 Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
@@ -20,7 +21,7 @@ VITE_PROJECT_KEY=
 
 ## Step 3 - Importing Flexben SDK to Your Current Project
 Import Flexben client library to your project after setting up your env file
-```
+```jsx
 import Flexben from 'flexben-client-js';
 const flexben = new Flexben();
 ```
@@ -31,7 +32,7 @@ we recommend you to setup your .env first to init this library
 to initialize library
 
 Your clientId, clientSecret, and grantType are from you ENV file that you set before initializing SDK, pass it to your initialization function 
-```
+```jsx
 flexben.init({
 	clientId: 'xxxx',
 	clientSecret: 'xxxx',
@@ -46,7 +47,7 @@ Since we're using GraphQL and Apollo Client, here are the list of Queries and Mu
 
 ### Login Authentication
 Login authentication needs two variables such a Username and Password
-```
+```jsx
 flexben.authLogin({
 	username: '',
 	password: '',
@@ -57,7 +58,7 @@ flexben.authLogin({
 ```
 
 ### Registration
-```
+```jsx
 flexben.authRegister({
 	name: '',
 	email: '',
@@ -70,14 +71,14 @@ flexben.authRegister({
 ```
 
   ### Forgot Password
-```
+```jsx
 flexben.authForgotPassword({
 	email: '',
 	url: '',
 });
 ```
 ### Reset Password
-```
+```jsx
 flexben.authResetPassword({
 	code: '',
 	password: '',
@@ -85,7 +86,7 @@ flexben.authResetPassword({
 ```
 ### Changing Password
 
-```
+```jsx
 flexben.authResetPassword({
 	current_password: '',
 	password: '',
@@ -94,7 +95,7 @@ flexben.authResetPassword({
 ```
 ### Update User Data
 
-```
+```jsx
 flexben.authUpdateUser({
 	name: '',
 	email: '',
@@ -108,7 +109,7 @@ flexben.authUpdateUser({
 ```
 
 ### Create Enrollment
-```
+```jsx
 flexben.createEnrollment({
 	id: '',
 	period_id: '',
@@ -117,7 +118,7 @@ flexben.createEnrollment({
 });
 ```
 ### Create Claim
-```
+```jsx
 flexben.createClaim({
 	name: '',
 	merchant_name: '',
@@ -131,7 +132,7 @@ flexben.createClaim({
 }); 
 ```
 ### Update Claim
-```
+```jsx
 flexben.updateClaim({
 	id: '',
 	name: '',
@@ -146,7 +147,7 @@ flexben.updateClaim({
 });
 ```
 ### Delete Claim
-```
+```jsx
 flexben.deleteClaim({
 	id: '',
 });
@@ -155,47 +156,47 @@ flexben.deleteClaim({
 ## Queries
 
 ### Get All Frequently Asked Questions
-```
+```jsx
 flexben.getFaq();
 ```
 
 ### Get All Periods
-```
+```jsx
 flexben.getPeriods();
 ```
 
 ### Get Current Period
-```
+```jsx
 flexben.getCurrentPeriod();
 ```
 
 ### Get Upcoming Period
-```
+```jsx
 flexben.getUpcomingPeriod();
 ```
 ### Get All Benefits
-```
+```jsx
 flexben.getAllBenefits();
 ```
 ### Get Benefit Based on Period
-```
+```jsx
 flexben.getPeriodBenefits({	
 	id: '',
 });
 ```
 ### Get All Enrollments
-```
+```jsx
 flexben.getEnrollments();
 ```
 
 ### Get Detail Enrollment
-```
+```jsx
 flexben.getDetailEnrollment({
 	id: '',
 });
 ```
 ### Get All Claims
-```
+```jsx
 flexben.getClaims({
 	period_id: '',
 	first: '',
@@ -203,13 +204,13 @@ flexben.getClaims({
 });
 ```
 ### Get Detail Claim
-```
+```jsx
 flexben.getDetailClaim({
 	id: '',
 });
 ```
 ### Get Claim Categories
-```
+```jsx
 flexben.getDetailClaim({
 	parent_id: '',
 	isParent: bool,
@@ -217,13 +218,13 @@ flexben.getDetailClaim({
 ```
 
 ### Get User
-```
+```jsx
 flexben.getUser();
 ```
 
 
 ### Get getPoint
-```
+```jsx
 flexben.getPoint();
 ```
 
@@ -231,3 +232,6 @@ flexben.getPoint();
 - **@apollo/client** : **^3.7.9** [https://www.apollographql.com/docs/react/)
 - **apollo-boost** : **^0.4.9** [https://www.npmjs.com/package/apollo-boost)
 - **graphql** : **^15.8.0** [https://graphql.org/)
+
+
+<!-- Skeleton APP -->
