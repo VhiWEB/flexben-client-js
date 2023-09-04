@@ -1,30 +1,14 @@
-# Flexben Product Client Js
 
+ # Getting Started
 This library contains core functionalities needed for Flexben Product.
+Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
 
-## Getting Started
+## Step 1 - Installing
+Installing this SDK is pretty simple you just need to run `npm i flexben-client-js` or `yarn add flexben-client-js` in your terminal inside your current project.
 
-1. Install flexben-client-js.
-2. Run `npm i flexben-client-js` or `yarn add flexben-client-js` to install the library.
-3. Import the library
+## Step 2 - Setup Your Env File
 
-## Installing
-
-First, you need to import this library into your application.
-```
-import Flexben from 'flexben-client-js';
-
-const flexben = new Flexben();
-```
-
-## Init using AppId 
-
-Then, you need to initializing this library using appid, i'll recommend you to setup your .env first to init this library
-
-- **Setup .env file**
-
-Create `.env` file on code editor similar to `.env.example` or copy the code below : (see [official docs](https://vitejs.dev/guide/env-and-mode.html))
-
+Create an `.env` file on code editor similar to `.env.example` it contains your credential make some api request to our api end points
 ```
 VITE_API_URL=
 VITE_AUTH_CLIENT_ID=
@@ -34,220 +18,214 @@ VITE_GRANT_TYPE=
 VITE_PROJECT_KEY=
 ```
 
-- **Init this library**
+## Step - 3 Importing Flexben SDK to Your Current Project
+Import Flexben client library to your project after setting up your env file
+```
+import Flexben from 'flexben-client-js';
+const flexben = new Flexben();
+```
 
+## Step 4 - Initializing SDK
+Then, you need to initializing this library using appid,
+we recommend you to setup your .env first to init this library
+to initialize library
 ```
 flexben.init({
-  clientId: config.api.VITE_AUTH_CLIENT_ID,
-  clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
-  grantType: config.api.VITE_GRANT_TYPE,
+	clientId: config.api.VITE_AUTH_CLIENT_ID,
+	clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
+	grantType: config.api.VITE_GRANT_TYPE,
 })
 ```
 
-## Mutations
+# Mutations & Queries
+Since we're using GraphQL and Apollo Client, here are the list of Queries and Mutations function for our data request to be implemented in Your current project
 
-- **Auth Login**
+## Mutation
 
+### Login Authentication
+Login authentication needs two variables such a Username and Password
 ```
 flexben.authLogin({
-  username: '',
-  password: '',
+	username: '',
+	password: '',
 }).then(({ data: { accessToken: { access_token } } }) => {
-  flexben.setToken({ token: access_token })
+	//setting up token
+	flexben.setToken({ token: access_token })
 });
 ```
 
-- **Auth Register**
-
+### Registration
 ```
 flexben.authRegister({
-  name: '',
-  email: '',
-  phone: '',
-  username: '',
-  password: '',
+	name: '',
+	email: '',
+	phone: '',
+	username: '',
+	password: '',
 }).then(({ data: { accessToken: { access_token } } }) => {
-  flexben.setToken({ token: access_token })
+	flexben.setToken({ token: access_token })
 });
 ```
 
-- **Auth Forgot Password**
-
+  ### Forgot Password
 ```
 flexben.authForgotPassword({
-  email: '',
-  url: '',
+	email: '',
+	url: '',
 });
 ```
-
-- **Auth Reset Password**
+### Reset Password
+```
+flexben.authResetPassword({
+	code: '',
+	password: '',
+});
+```
+### Changing Password
 
 ```
 flexben.authResetPassword({
-  code: '',
-  password: '',
+	current_password: '',
+	password: '',
+	password_confirmation: '',
 });
 ```
-
-- **Auth Change Password**
-
-```
-flexben.authResetPassword({
-  current_password: '',
-  password: '',
-  password_confirmation: '',
-});
-```
-
-- **Update User**
+### Update User Data
 
 ```
 flexben.authUpdateUser({
-  name: '',
-  email: '',
-  phone: '',
-  password: '',
-  password_confirmation: '',
-  gender: '',
-  birth_at: '',
-  avatar: '',
+	name: '',
+	email: '',
+	phone: '',
+	password: '',
+	password_confirmation: '',
+	gender: '',
+	birth_at: '',
+	avatar: '',
 });
 ```
 
-- **Create Enrollment**
-
+### Create Enrollment
 ```
 flexben.createEnrollment({
-  id: '',
-  period_id: '',
-  is_submitted: '',
-  benefit_items_ids: []
+	id: '',
+	period_id: '',
+	is_submitted: '',
+	benefit_items_ids: []
 });
 ```
-
-- **Create Claim**
-
+### Create Claim
 ```
 flexben.createClaim({
-  name: '',
-  merchant_name: '',
-  description: '',
-  amount: '',
-  period_id: '',
-  category_id: '',
-  transaction_at: '',
-  receipt: '',
-  documents: '',
-});
+	name: '',
+	merchant_name: '',
+	description: '',
+	amount: '',
+	period_id: '',
+	category_id: '',
+	transaction_at: '',
+	receipt: '',
+	documents: '',
+}); 
 ```
-
-- **Update Claim**
-
+### Update Claim
 ```
 flexben.updateClaim({
-  id: '',
-  name: '',
-  merchant_name: '',
-  description: '',
-  amount: '',
-  period_id: '',
-  category_id: '',
-  transaction_at: '',
-  receipt: '',
-  documents: '',
+	id: '',
+	name: '',
+	merchant_name: '',
+	description: '',
+	amount: '',
+	period_id: '',
+	category_id: '',
+	transaction_at: '',
+	receipt: '',
+	documents: '',
 });
 ```
-
-- **Delete Claim**
-
+### Delete Claim
 ```
 flexben.deleteClaim({
-  id: '',
+	id: '',
 });
 ```
 
 ## Queries
 
-- **Get All Faq**
+### Get All Frequently Asked Questions
 ```
 flexben.getFaq();
 ```
 
-- **Get All Periods**
+### Get All Periods
 ```
 flexben.getPeriods();
 ```
 
-- **Get Current Period**
+### Get Current Period
 ```
 flexben.getCurrentPeriod();
 ```
 
-- **Get Upcoming Period**
+### Get Upcoming Period
 ```
 flexben.getUpcomingPeriod();
 ```
-
-- **Get All Benefits**
+### Get All Benefits
 ```
 flexben.getAllBenefits();
 ```
-
-- **Get Benefit Based on Period**
+### Get Benefit Based on Period
 ```
-flexben.getPeriodBenefits({
-  id: '',
+flexben.getPeriodBenefits({	
+	id: '',
 });
 ```
-
-- **Get All Enrollments**
+### Get All Enrollments
 ```
 flexben.getEnrollments();
 ```
 
-- **Get Detail Enrollment**
+### Get Detail Enrollment
 ```
 flexben.getDetailEnrollment({
-  id: '',
+	id: '',
 });
 ```
-
-- **Get All Claims**
+### Get All Claims
 ```
 flexben.getClaims({
-  period_id: '',
-  first: '',
-  page: '',
+	period_id: '',
+	first: '',
+	page: '',
 });
 ```
-
-- **Get Detail Claim**
+### Get Detail Claim
 ```
 flexben.getDetailClaim({
-  id: '',
+	id: '',
 });
 ```
-
-- **Get Claim Categories**
+### Get Claim Categories
 ```
 flexben.getDetailClaim({
-  parent_id: '',
-  isParent: bool,
+	parent_id: '',
+	isParent: bool,
 });
 ```
 
-- **Get User**
+### Get User
 ```
 flexben.getUser();
 ```
 
-- **Get getPoint**
+
+### Get getPoint
 ```
 flexben.getPoint();
 ```
 
-## Tools
-
+# Tools
 - **@apollo/client** : **^3.7.9** [https://www.apollographql.com/docs/react/)
 - **apollo-boost** : **^0.4.9** [https://www.npmjs.com/package/apollo-boost)
 - **graphql** : **^15.8.0** [https://graphql.org/)
