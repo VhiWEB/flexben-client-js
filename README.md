@@ -18,7 +18,7 @@ VITE_GRANT_TYPE=
 VITE_PROJECT_KEY=
 ```
 
-## Step - 3 Importing Flexben SDK to Your Current Project
+## Step 3 - Importing Flexben SDK to Your Current Project
 Import Flexben client library to your project after setting up your env file
 ```
 import Flexben from 'flexben-client-js';
