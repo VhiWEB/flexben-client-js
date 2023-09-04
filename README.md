@@ -10,7 +10,7 @@ Installing this SDK is pretty simple you just need to run `npm i @vhiweb/flexben
 ## Step 2 - Setup Your Env File
 
 Create an `.env` file on code editor similar to `.env.example` it contains your credential make some api request to our api end points
-```
+```bash
 VITE_API_URL=
 VITE_AUTH_CLIENT_ID=
 VITE_AUTH_CLIENT_SECRET=
