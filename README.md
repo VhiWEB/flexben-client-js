@@ -23,7 +23,8 @@ VITE_PROJECT_KEY=
 Import Flexben client library to your project after setting up your env file
 ```jsx
 import Flexben from 'flexben-client-js';
-export default const flexben = new Flexben();
+const flexben = new Flexben();
+export default flexben;
 ```
 
 ## Step 4 - Initializing SDK
