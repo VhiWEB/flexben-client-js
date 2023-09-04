@@ -4,7 +4,7 @@ This library contains core functionalities needed for Flexben Product.
 Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
 
 ## Step 1 - Installing
-Installing this SDK is pretty simple you just need to run `npm i flexben-client-js` or `yarn add flexben-client-js` in your terminal inside your current project.
+Installing this SDK is pretty simple you just need to run `npm i @vhiweb/flexben-client-js` or `yarn add @vhiweb/flexben-client-js` in your terminal inside your current project.
 
 ## Step 2 - Setup Your Env File
 
@@ -29,11 +29,13 @@ const flexben = new Flexben();
 Then, you need to initializing this library using appid,
 we recommend you to setup your .env first to init this library
 to initialize library
+
+Your clientId, clientSecret, and grantType are from you ENV file that you set before initializing SDK, pass it to your initialization function 
 ```
 flexben.init({
-	clientId: config.api.VITE_AUTH_CLIENT_ID,
-	clientSecret: config.api.VITE_AUTH_CLIENT_SECRET,
-	grantType: config.api.VITE_GRANT_TYPE,
+	clientId: 'xxxx',
+	clientSecret: 'xxxx',
+	grantType: 'xxxx',
 })
 ```
 
