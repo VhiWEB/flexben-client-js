@@ -31,7 +31,8 @@ flexben.init({
 ```
 # Methods
 ## Authentication 
-### Login
+- ### Login
+
 Login authentication needs two variables such a Username and Password
 ```jsx
 flexben.authLogin({
@@ -42,7 +43,7 @@ password: '',
 flexben.setToken({ token: access_token })
 });
 ```
-### Registration
+- ### Registration
 ```jsx
 flexben.authRegister({
 name: '',
@@ -54,21 +55,21 @@ password: '',
 flexben.setToken({ token: access_token })
 });
 ```
-### Forgot Password
+- ### Forgot Password
 ```jsx
 flexben.authForgotPassword({
 email: '',
 url: '',
 });
 ```
-### Reset Password
+- ### Reset Password
 ```jsx
 flexben.authResetPassword({
 code: '',
 password: '',
 });
 ```
-### Change Password
+- ### Change Password
 ```jsx
 flexben.authResetPassword({
 current_password: '',
@@ -78,12 +79,12 @@ password_confirmation: '',
 ```
 
 ## User
-### Get User
+- ### Get User
 ```jsx
 flexben.getUser();
 ```
 
-### Update User Data
+- ### Update User Data
 ```jsx
 flexben.authUpdateUser({
 name: '',
@@ -98,7 +99,7 @@ avatar: '',
 ```
 
 ## Enrollments
-### Create Enrollment
+- ### Create Enrollment
 ```jsx
 flexben.createEnrollment({
 id: '',
@@ -107,11 +108,11 @@ is_submitted: '',
 benefit_items_ids: []
 });
 ```
-### Get All Enrollments
+- ### Get All Enrollments
 ```jsx
 flexben.getEnrollments();
 ```
-### Get Detail Enrollment
+- ### Get Detail Enrollment
 ```jsx
 flexben.getDetailEnrollment({
 id: '',
@@ -119,7 +120,7 @@ id: '',
 ```
 
 ## Claims
-### Create Claim
+- ### Create Claim
 ```jsx
 flexben.createClaim({
 name: '',
@@ -133,7 +134,7 @@ receipt: '',
 documents: '',
 }); 
 ```
-### Update Claim
+- ### Update Claim
 ```jsx
 flexben.updateClaim({
 id: '',
@@ -148,13 +149,13 @@ receipt: '',
 documents: '',
 });
 ```
-### Delete Claim
+- ### Delete Claim
 ```jsx
 flexben.deleteClaim({
 id: '',
 });
 ```
-### Get All Claims
+- ### Get All Claims
 ```jsx
 flexben.getClaims({
 period_id: '',
@@ -162,13 +163,13 @@ first: '',
 page: '',
 });
 ```
-### Get Detail Claim
+- ### Get Detail Claim
 ```jsx
 flexben.getDetailClaim({
 id: '',
 });
 ```
-### Get Claim Categories
+- ### Get Claim Categories
 ```jsx
 flexben.getDetailClaim({
 parent_id: '',
@@ -177,25 +178,25 @@ isParent: bool,
 ```
 
 ## Periods
-### Get All Periods
+- ### Get All Periods
 ```jsx
 flexben.getPeriods();
 ```
-### Get Current Period
+- ### Get Current Period
 ```jsx
 flexben.getCurrentPeriod();
 ```
-### Get Upcoming Period
+- ### Get Upcoming Period
 ```jsx
 flexben.getUpcomingPeriod();
 ```
 
 ## Benefits
-### Get All Benefits
+- ### Get All Benefits
 ```jsx
 flexben.getAllBenefits();
 ```
-### Get Benefit Based on Period
+- ### Get Benefit Based on Period
 ```jsx
 flexben.getPeriodBenefits({	
 	id: '',
@@ -203,13 +204,13 @@ flexben.getPeriodBenefits({
 ```
 
 ## Points
-### Get getPoint
+- ### Get getPoint
 ```jsx
 flexben.getPoint();
 ```
 
 ## FAQ
-### Get All Frequently Asked Questions
+- ### Get All Frequently Asked Questions
 ```jsx
 flexben.getFaq();
 ```
