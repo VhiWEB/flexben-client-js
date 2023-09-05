@@ -1,22 +1,16 @@
 
 <!-- Read me -->
  # Getting Started
-This library contains core functionalities needed for Flexben Product.
-Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
+ Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
 
 ## Step 1 - Installing
 Installing this SDK is pretty simple you just need to run `npm i @vhiweb/flexben-client-js` or `yarn add @vhiweb/flexben-client-js` in your terminal inside your current project.
 
 ## Step 2 - Setup Your Env File
-
-Create an `.env` file on code editor similar to `.env.example` it contains your credential make some api request to our api end points
+Create an `.env` file on code editor that contain two variable `client id` and `client secret`
 ```bash
-VITE_API_URL=
-VITE_AUTH_CLIENT_ID=
-VITE_AUTH_CLIENT_SECRET=
-VITE_ENCRYPTOR_KEY=
-VITE_GRANT_TYPE=
-VITE_PROJECT_KEY=
+CLIENT_ID=exampleofclientid
+CLIENT_SECRET=exampleofclientsecret
 ```
 
 ## Step 3 - Importing Flexben SDK to Your Current Project
@@ -28,25 +22,16 @@ export default flexben;
 ```
 
 ## Step 4 - Initializing SDK
-Then, you need to initializing this library using appid,
-we recommend you to setup your .env first to init this library
-to initialize library
-
-Your clientId, clientSecret, and grantType are from you ENV file that you set before initializing SDK, pass it to your initialization function 
+Your `client id` and `client secret` are from you ENV file that you set before initializing SDK, pass that variable to your init function like code below:
 ```jsx
 flexben.init({
 	clientId: 'xxxx',
 	clientSecret: 'xxxx',
-	grantType: 'xxxx',
 })
 ```
-
-# Mutations & Queries
-Since we're using GraphQL and Apollo Client, here are the list of Queries and Mutations function for our data request to be implemented in Your current project
-
-## Mutation
-
-### Login Authentication
+# Methods
+## Authentication 
+### Login
 Login authentication needs two variables such a Username and Password
 ```jsx
 flexben.authLogin({
@@ -57,7 +42,6 @@ flexben.authLogin({
 	flexben.setToken({ token: access_token })
 });
 ```
-
 ### Registration
 ```jsx
 flexben.authRegister({
@@ -70,8 +54,7 @@ flexben.authRegister({
 	flexben.setToken({ token: access_token })
 });
 ```
-
-  ### Forgot Password
+### Forgot Password
 ```jsx
 flexben.authForgotPassword({
 	email: '',
@@ -85,8 +68,7 @@ flexben.authResetPassword({
 	password: '',
 });
 ```
-### Changing Password
-
+### Change Password
 ```jsx
 flexben.authResetPassword({
 	current_password: '',
@@ -94,8 +76,14 @@ flexben.authResetPassword({
 	password_confirmation: '',
 });
 ```
-### Update User Data
 
+## User
+### Get User
+```jsx
+flexben.getUser();
+```
+
+### Update User Data
 ```jsx
 flexben.authUpdateUser({
 	name: '',
@@ -109,6 +97,7 @@ flexben.authUpdateUser({
 });
 ```
 
+## Enrollments
 ### Create Enrollment
 ```jsx
 flexben.createEnrollment({
@@ -118,6 +107,18 @@ flexben.createEnrollment({
 	benefit_items_ids: []
 });
 ```
+### Get All Enrollments
+```jsx
+flexben.getEnrollments();
+```
+### Get Detail Enrollment
+```jsx
+flexben.getDetailEnrollment({
+	id: '',
+});
+```
+
+## Claims
 ### Create Claim
 ```jsx
 flexben.createClaim({
@@ -153,49 +154,6 @@ flexben.deleteClaim({
 	id: '',
 });
 ```
-
-## Queries
-
-### Get All Frequently Asked Questions
-```jsx
-flexben.getFaq();
-```
-
-### Get All Periods
-```jsx
-flexben.getPeriods();
-```
-
-### Get Current Period
-```jsx
-flexben.getCurrentPeriod();
-```
-
-### Get Upcoming Period
-```jsx
-flexben.getUpcomingPeriod();
-```
-### Get All Benefits
-```jsx
-flexben.getAllBenefits();
-```
-### Get Benefit Based on Period
-```jsx
-flexben.getPeriodBenefits({	
-	id: '',
-});
-```
-### Get All Enrollments
-```jsx
-flexben.getEnrollments();
-```
-
-### Get Detail Enrollment
-```jsx
-flexben.getDetailEnrollment({
-	id: '',
-});
-```
 ### Get All Claims
 ```jsx
 flexben.getClaims({
@@ -218,15 +176,42 @@ flexben.getDetailClaim({
 });
 ```
 
-### Get User
+## Periods
+### Get All Periods
 ```jsx
-flexben.getUser();
+flexben.getPeriods();
+```
+### Get Current Period
+```jsx
+flexben.getCurrentPeriod();
+```
+### Get Upcoming Period
+```jsx
+flexben.getUpcomingPeriod();
 ```
 
+## Benefits
+### Get All Benefits
+```jsx
+flexben.getAllBenefits();
+```
+### Get Benefit Based on Period
+```jsx
+flexben.getPeriodBenefits({	
+	id: '',
+});
+```
 
+## Points
 ### Get getPoint
 ```jsx
 flexben.getPoint();
+```
+
+## FAQ
+### Get All Frequently Asked Questions
+```jsx
+flexben.getFaq();
 ```
 
 # Tools
