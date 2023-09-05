@@ -35,45 +35,45 @@ flexben.init({
 Login authentication needs two variables such a Username and Password
 ```jsx
 flexben.authLogin({
-	username: '',
-	password: '',
+username: '',
+password: '',
 }).then(({ data: { accessToken: { access_token } } }) => {
-	//setting up token
-	flexben.setToken({ token: access_token })
+//setting up token
+flexben.setToken({ token: access_token })
 });
 ```
 ### Registration
 ```jsx
 flexben.authRegister({
-	name: '',
-	email: '',
-	phone: '',
-	username: '',
-	password: '',
+name: '',
+email: '',
+phone: '',
+username: '',
+password: '',
 }).then(({ data: { accessToken: { access_token } } }) => {
-	flexben.setToken({ token: access_token })
+flexben.setToken({ token: access_token })
 });
 ```
 ### Forgot Password
 ```jsx
 flexben.authForgotPassword({
-	email: '',
-	url: '',
+email: '',
+url: '',
 });
 ```
 ### Reset Password
 ```jsx
 flexben.authResetPassword({
-	code: '',
-	password: '',
+code: '',
+password: '',
 });
 ```
 ### Change Password
 ```jsx
 flexben.authResetPassword({
-	current_password: '',
-	password: '',
-	password_confirmation: '',
+current_password: '',
+password: '',
+password_confirmation: '',
 });
 ```
 
@@ -86,14 +86,14 @@ flexben.getUser();
 ### Update User Data
 ```jsx
 flexben.authUpdateUser({
-	name: '',
-	email: '',
-	phone: '',
-	password: '',
-	password_confirmation: '',
-	gender: '',
-	birth_at: '',
-	avatar: '',
+name: '',
+email: '',
+phone: '',
+password: '',
+password_confirmation: '',
+gender: '',
+birth_at: '',
+avatar: '',
 });
 ```
 
@@ -101,10 +101,10 @@ flexben.authUpdateUser({
 ### Create Enrollment
 ```jsx
 flexben.createEnrollment({
-	id: '',
-	period_id: '',
-	is_submitted: '',
-	benefit_items_ids: []
+id: '',
+period_id: '',
+is_submitted: '',
+benefit_items_ids: []
 });
 ```
 ### Get All Enrollments
@@ -114,7 +114,7 @@ flexben.getEnrollments();
 ### Get Detail Enrollment
 ```jsx
 flexben.getDetailEnrollment({
-	id: '',
+id: '',
 });
 ```
 
@@ -122,57 +122,57 @@ flexben.getDetailEnrollment({
 ### Create Claim
 ```jsx
 flexben.createClaim({
-	name: '',
-	merchant_name: '',
-	description: '',
-	amount: '',
-	period_id: '',
-	category_id: '',
-	transaction_at: '',
-	receipt: '',
-	documents: '',
+name: '',
+merchant_name: '',
+description: '',
+amount: '',
+period_id: '',
+category_id: '',
+transaction_at: '',
+receipt: '',
+documents: '',
 }); 
 ```
 ### Update Claim
 ```jsx
 flexben.updateClaim({
-	id: '',
-	name: '',
-	merchant_name: '',
-	description: '',
-	amount: '',
-	period_id: '',
-	category_id: '',
-	transaction_at: '',
-	receipt: '',
-	documents: '',
+id: '',
+name: '',
+merchant_name: '',
+description: '',
+amount: '',
+period_id: '',
+category_id: '',
+transaction_at: '',
+receipt: '',
+documents: '',
 });
 ```
 ### Delete Claim
 ```jsx
 flexben.deleteClaim({
-	id: '',
+id: '',
 });
 ```
 ### Get All Claims
 ```jsx
 flexben.getClaims({
-	period_id: '',
-	first: '',
-	page: '',
+period_id: '',
+first: '',
+page: '',
 });
 ```
 ### Get Detail Claim
 ```jsx
 flexben.getDetailClaim({
-	id: '',
+id: '',
 });
 ```
 ### Get Claim Categories
 ```jsx
 flexben.getDetailClaim({
-	parent_id: '',
-	isParent: bool,
+parent_id: '',
+isParent: bool,
 });
 ```
 
