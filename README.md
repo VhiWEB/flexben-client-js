@@ -7,7 +7,7 @@
 Installing this SDK is pretty simple you just need to run `npm i @vhiweb/flexben-client-js` or `yarn add @vhiweb/flexben-client-js` in your terminal inside your current project.
 
 ## Step 2 - Setup Your Env File
-Create an `.env` file on code editor that contain two variable `client id` and `client secret`
+Create an `.env` file on your root file that contain two variable `CLIENT_ID` and `CLIENT_SECRET`
 ```bash
 CLIENT_ID=exampleofclientid
 CLIENT_SECRET=exampleofclientsecret
