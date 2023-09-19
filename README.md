@@ -266,7 +266,7 @@ createClaim({
 name | `string` | | | yes
 merchant_name | `string` | | | yes
 description | `string` | | | no
-amount | `string` | `number` | | | yes
+amount | `string` or `number` | | | yes
 period_id | `string` | | | yes
 category_id | `string` | | | yes
 transaction_at | `string` | | | yes
@@ -297,7 +297,7 @@ id | `number` | | | yes
 name | `string` | | | yes
 merchant_name | `string` | | | yes
 description | `string` | | | no
-amount | `string` | `number` | | | yes
+amount | `string` or `number` | | | yes
 period_id | `string` | | | yes
 category_id | `string` | | | yes
 transaction_at | `string` | | | yes
@@ -331,7 +331,7 @@ flexben.getClaims({
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
-period_id | `string` | `number` | | | no  
+period_id | `string` or `number` | | | no  
 first | `number` | | | no  
 page | `number` | | | no  
   
@@ -356,7 +356,7 @@ flexben.getClaimCategories({
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
-parent_id | `string` | `number` | | | yes  
+parent_id | `string` or `number` | | | yes  
 isParent | `boolean` | | | no  
 
 ### Benefits
@@ -376,7 +376,7 @@ flexben.getPeriodBenefits({
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
-id | `string` | `number` | | | yes  
+id | `string` or `number` | | | yes  
 
 ### Points
 
