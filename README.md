@@ -1,219 +1,356 @@
+  
 
-<!-- Read me -->
- # Getting Started
- Flexben Client Js is a library to supporting development for flexben solutions project. Flexben client Js are using GraphQL and Apollo Client as a query language to get data from API to send and recieving data
+# Flexben SDK
+Welcome to the Flexben Software Development Kit (SDK), your gateway to seamless API access using GraphQL within the Flexben platform ([https://flexben.id](https://flexben.id/)). This developer-friendly resource empowers you to efficiently retrieve and manipulate data to create tailored solutions.
 
-## Step 1 - Installing
-Installing this SDK is pretty simple you just need to run `npm i @vhiweb/flexben-client-js` or `yarn add @vhiweb/flexben-client-js` in your terminal inside your current project.
+## Prerequisites
+To use this package, you must have a registered Flexben client application. Make sure you already have the `Client ID` and `Client Secret` .
 
-## Step 2 - Setup Your Env File
-Create an `.env` file on your root file that contain two variable `CLIENT_ID` and `CLIENT_SECRET`
+## Installation
+Installing this SDK is straightforward. Simply run this command in your terminal within your project directory.
 ```bash
-CLIENT_ID=exampleofclientid
-CLIENT_SECRET=exampleofclientsecret
+npm  i  @vhiweb/flexben-client-js
 ```
-
-## Step 3 - Importing Flexben SDK to Your Current Project
-Import Flexben client library to your project after setting up your env file
-```jsx
-import Flexben from 'flexben-client-js';
-const flexben = new Flexben();
-export default flexben;
+or
+```bash
+yarn  add  @vhiweb/flexben-client-js
 ```
+Import the Flexben client library into your project as shown below:
+```ts
+// Using ES modules (default)
 
-## Step 4 - Initializing SDK
-Your `client id` and `client secret` are from you ENV file that you set before initializing SDK, pass that variable to your init function like code below:
-```jsx
+import  Flexben  from  'flexben-client-js';
+// OR if you are using CommonJS modules
+const  Flexben  =  require('flexben-client-js');
+```
+To initialize the SDK, you need to have authorized client access by getting the Client ID and Client Secret. Ask to the platform owner to get this access.
+```ts
+const  flexben  =  new  Flexben();
 flexben.init({
-	clientId: 'xxxx',
-	clientSecret: 'xxxx',
+clientId:  'YOUR_CLIENT_ID',
+clientSecret:  'YOUR_CLIENT_SECRET',
 })
 ```
-# Methods
-## Authentication 
-Login authentication needs two variables such a Username and Password
-```jsx
+
+## Usage
+
+### User Login
+To perform login authentication, provide a username and password as shown:
+```ts
 flexben.authLogin({
-  username: '',
-  password: '',
-}).then(({ data: { accessToken: { access_token } } }) => {
-//setting up token
-flexben.setToken({ token: access_token })
+ username:  'email@example.com',
+ password:  'secret12345',
+})
+.then(token  => {
+ console.log(`Your access token: ${token.accessToken}`);
+ console.log(`Expiration: ${token.expiry}`);
+})
+.catch(e  => {
+ console.error(`Login failed: ${e.message}`);
 });
+
 ```
-- ### Registration
-```jsx
-flexben.authRegister({
-  name: '',
-  email: '',
-  phone: '',
-  username: '',
-  password: '',
-}).then(({ data: { accessToken: { access_token } } }) => {
-  flexben.setToken({ token: access_token })
-});
-```
-- ### Forgot Password
-```jsx
-flexben.authForgotPassword({
-  email: '',
-  url: '',
-});
-```
-- ### Reset Password
-```jsx
-flexben.authResetPassword({
-  code: '',
-  password: '',
-});
-```
-- ### Change Password
-```jsx
-flexben.authResetPassword({
-  current_password: '',
-  password: '',
-  password_confirmation: '',
+
+#### Get User
+
+Retrieve user data with this method:
+```ts
+flexben.getUser()
+.then(user  => {
+console.log(`Name: ${user.name}`);
+console.log(`Email: ${user.email}`);
 });
 ```
 
-## User
-- ### Get User
+#### Get Current Period
+Fetch the current period with this method:
+```ts
+flexben.getCurrentPeriod()
+.then(period  => {
+console.log(`ID: ${period.id}`);
+console.log(`Name: ${period.name}`);
+console.log(`Enrolled?: ${period.enrolled  ?  'Yes'  :  'No'}`);
+});
+```
+#### Get Available Benefits
+#### Submit Enrollment
+To create an enrollment, use this method:
+```jsx
+flexben.submitEnrollment({
+period_id:  41,
+benefit_items_ids: [7, 28, 43, 81]
+})
+.then(enrollment  => {
+console.log(
+```
+## Reference
+#### authLogin
+```jsx
+authLogin(username, password): Promise<Token>
+```
+| Param | Type | Default | Description | Required
+|--|--|--|--|--|
+| username | `String` | | User email/username | yes
+| password | `String` | | User password | yes
+
+#### authForgotPassword
+```jsx
+authForgotPassword(email)
+```
+| Param | Type | Default | Description | Required 
+|--|--|--|--|--|
+| email | `String` | | User email/username | yes
+
+#### Reset Password
+For resetting a user's password, follow this approach:
+```jsx
+authResetPassword({code: '',password: ''})
+```
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+| code | `String` | | Reset Password Code, You will get reset password code from forgot password method | yes
+| password | `String` | | password| yes
+#### Change Password
+
+To change a user's password, use this method:
+```jsx
+authResetPassword({current_password: '',password: '',password_confirmation: ''});
+```
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+current_password | `string` | | | yes
+password | `string` | | | yes
+password_confirmation | `string` | | | yes
+
+### User
+
+#### Get User
+
+Retrieve user data with this method:
 ```jsx
 flexben.getUser();
 ```
-
-- ### Update User Data
+#### Update User Data
+To update user data, employ the following method:
 ```jsx
 flexben.authUpdateUser({
-  name: '',
-  email: '',
-  phone: '',
-  password: '',
-  password_confirmation: '',
-  gender: '',
-  birth_at: '',
-  avatar: '',
+name:  '',
+email:  '',
+phone:  '',
+password:  '',
+password_confirmation:  '',
+gender:  '',
+birth_at:  '',
+avatar:  '',
 });
+```
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+name | `string` | | | no
+email | `string` | | | no
+phone | `string` | | | no
+gender | `string` | | | no
+birth_at | `string` | | | no
+avatar | `string` | | | no
+password | `string` | | | yes
+password_confirmation | `string` | | | yes
+
+### Periods
+
+#### Get All Periods
+
+Retrieve all periods with this method:
+```jsx
+getPeriods();
+```
+#### Get Current Period
+
+Fetch the current period with this method:
+
+```jsx
+getCurrentPeriod();
 ```
 
-## Enrollments
-- ### Create Enrollment
-```jsx
-flexben.createEnrollment({
-  id: '',
-  period_id: '',
-  is_submitted: '',
-  benefit_items_ids: []
-});
-```
-- ### Get All Enrollments
-```jsx
-flexben.getEnrollments();
-```
-- ### Get Detail Enrollment
-```jsx
-flexben.getDetailEnrollment({
-  id: '',
-});
-```
-
-## Claims
-- ### Create Claim
-```jsx
-flexben.createClaim({
-  name: '',
-  merchant_name: '',
-  description: '',
-  amount: '',
-  period_id: '',
-  category_id: '',
-  transaction_at: '',
-  receipt: '',
-  documents: '',
-}); 
-```
-- ### Update Claim
-```jsx
-flexben.updateClaim({
-  id: '',
-  name: '',
-  merchant_name: '',
-  description: '',
-  amount: '',
-  period_id: '',
-  category_id: '',
-  transaction_at: '',
-  receipt: '',
-  documents: '',
-});
-```
-- ### Delete Claim
-```jsx
-flexben.deleteClaim({
-  id: '',
-});
-```
-- ### Get All Claims
-```jsx
-flexben.getClaims({
-  period_id: '',
-  first: '',
-  page: '',
-});
-```
-- ### Get Detail Claim
-```jsx
-flexben.getDetailClaim({
-  id: '',
-});
-```
-- ### Get Claim Categories
-```jsx
-flexben.getDetailClaim({
-  parent_id: '',
-  isParent: bool,
-});
-```
-
-## Periods
-- ### Get All Periods
-```jsx
-flexben.getPeriods();
-```
-- ### Get Current Period
-```jsx
-flexben.getCurrentPeriod();
-```
-- ### Get Upcoming Period
+#### Get Upcoming Period
+Retrieve information about the upcoming period using this method:
 ```jsx
 flexben.getUpcomingPeriod();
 ```
-
-## Benefits
-- ### Get All Benefits
+### Enrollments
+#### Create Enrollment
+To create an enrollment, use this method:
 ```jsx
-flexben.getAllBenefits();
+flexben.createEnrollment({ id:  '', period_id:  '', is_submitted:  '', benefit_items_ids: [] });
 ```
-- ### Get Benefit Based on Period
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+id | `string` | | | yes
+period_id | `string` | | | yes
+is_submitted | `string` | | | yes
+benefit_items_ids | `Array` of `benefit_item_id` ex: `[1,3,4,6]` | | | yes
+#### Get All Enrollments
+Retrieve all enrollments with this method:
 ```jsx
-flexben.getPeriodBenefits({	
-	id: '',
+getEnrollments();
+```
+#### Get Detail Enrollment
+Fetch details of a specific enrollment using this method:
+```jsx
+getDetailEnrollment({
+id:  '',
+});
+```
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+id | `string` | | | yes
+
+### Claims
+#### Create Claim
+Create a claim using this method:
+```jsx
+createClaim({
+name:  '',
+merchant_name:  '',
+description:  '',
+amount:  '',
+period_id:  '',
+category_id:  '',
+transaction_at:  '',
+receipt:  '',
+documents:  '',
+});
+```
+| Param | Type | Default | description | Required
+|--|--|--|--|--|
+name | `string` | | | yes
+merchant_name | `string` | | | yes
+description | `string` | | | no
+amount | `string | number` | | | yes
+period_id | `string` | | | yes
+category_id | `string` | | | yes
+transaction_at | `string` | | | yes
+receipt | `string` | | | no
+documents | `string` | | | yes
+  
+#### Update Claim
+
+Update an existing claim with this method:
+
+```jsx
+
+flexben.updateClaim({
+
+id:  '',
+
+name:  '',
+
+merchant_name:  '',
+
+description:  '',
+
+amount:  '',
+
+period_id:  '',
+
+category_id:  '',
+
+transaction_at:  '',
+
+receipt:  '',
+
+documents:  '',
+
+});
+
+```
+
+  
+
+#### Delete Claim
+
+Delete a claim using this method:
+
+```jsx
+
+flexben.deleteClaim({
+
+id:  '',
+
+});
+
+```
+
+  
+
+#### Get All Claims
+
+Retrieve all claims with this method:
+
+```jsx
+
+flexben.getClaims({
+
+period_id:  '',
+
+first:  '',
+
+page:  '',
+
+});
+
+```
+
+  
+
+#### Get Detail Claim
+
+Fetch details of a specific claim using this method:
+
+```jsx
+
+flexben.getDetailClaim({
+
+id:  '',
+
+});
+
+```
+#### Get Claim Categories
+
+Retrieve claim categories with this method:
+```jsx
+flexben.getDetailClaim({
+parent_id:  '',
+isParent:  bool,
 });
 ```
 
-## Points
-- ### Get getPoint
+### Benefits
+#### Get All Benefits
+Retrieve all benefits with this method:
+```jsx
+flexben.getAllBenefits();
+```
+
+#### Get Benefit Based on Period
+Fetch benefits based on a specific period using this method:
+```jsx
+flexben.getPeriodBenefits({
+id:  '',
+});
+```
+
+### Points
+
+#### Get Point
+Retrieve points information with this method:
 ```jsx
 flexben.getPoint();
 ```
-
-## FAQ
-- ### Get All Frequently Asked Questions
+### Others
+#### Get All Frequently Asked Questions
+Retrieve all frequently asked questions with this method:
 ```jsx
 flexben.getFaq();
 ```
-
-# Tools
-- **@apollo/client** : **^3.7.9** [https://www.apollographql.com/docs/react/)
-- **apollo-boost** : **^0.4.9** [https://www.npmjs.com/package/apollo-boost)
-- **graphql** : **^15.8.0** [https://graphql.org/)
+Explore the full potential of the Flexben SDK and enhance your development capabilities within the Flexben platform.
