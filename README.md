@@ -27,15 +27,15 @@ To initialize the SDK, you need to have authorized client access by getting the 
 ```ts
 const  flexben  =  new  Flexben();
 flexben.init({
-clientId:  'YOUR_CLIENT_ID',
-clientSecret:  'YOUR_CLIENT_SECRET',
+  clientId:  'YOUR_CLIENT_ID', // Type: String | Mandatory: Yes | Nullable: No
+  clientSecret:  'YOUR_CLIENT_SECRET', // Type: String | Mandatory: Yes | Nullable: No
 })
 ```
 
 ## Usage
 
 ### User Login
-To perform login authentication, provide a username and password as shown:
+Authenticate a user by providing their username and password: Output: Promise<Token>.
 ```ts
 flexben.authLogin({
  username:  'email@example.com',
@@ -53,23 +53,21 @@ flexben.authLogin({
 
 #### Get User
 
-Retrieve user data with this method:
+Retrieve user data with this method: Promise<User>
 ```ts
-flexben.getUser()
-.then(user  => {
-console.log(`Name: ${user.name}`);
-console.log(`Email: ${user.email}`);
+flexben.getUser().then(user  => {
+  console.log(`Name: ${user.name}`);
+  console.log(`Email: ${user.email}`);
 });
 ```
 
 #### Get Current Period
-Fetch the current period with this method:
+Fetch the current period with this method: Output: Promise<Period>
 ```ts
-flexben.getCurrentPeriod()
-.then(period  => {
-console.log(`ID: ${period.id}`);
-console.log(`Name: ${period.name}`);
-console.log(`Enrolled?: ${period.enrolled  ?  'Yes'  :  'No'}`);
+flexben.getCurrentPeriod().then(period  => {
+  console.log(`ID: ${period.id}`);
+  console.log(`Name: ${period.name}`);
+  console.log(`Enrolled?: ${period.enrolled  ?  'Yes'  :  'No'}`);
 });
 ```
 #### Get Available Benefits
