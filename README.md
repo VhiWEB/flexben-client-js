@@ -91,28 +91,57 @@ authLogin(username, password): Promise<Token>
 | username | `String` | | User email/username | yes
 | password | `String` | | User password | yes
 
+#### authRegister
+```ts
+authRegister({
+    name: '',
+    email: '',
+    phone: '',
+    username: '',
+    password: ''
+}): Promise<Token>
+```
+| Param | Type | Default | Description | Required
+|--|--|--|--|--|
+| name | `String` | | User name | yes
+| email | `String` | | User email | yes
+| phone | `String` | | User phone | yes
+| username | `String` | | User email/username | yes
+| password | `String` | | User password | yes
+
 #### authForgotPassword
 ```ts
-authForgotPassword(email)
+authForgotPassword({
+    email: '',
+    url: ''
+})
 ```
 | Param | Type | Default | Description | Required 
 |--|--|--|--|--|
 | email | `String` | | User email/username | yes
+| email | `String` | | | no
 
 #### Reset Password
 For resetting a user's password, follow this approach:
 ```ts
-authResetPassword({code: '',password: ''})
+authResetPassword({
+    code: '',
+    password: ''
+})
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
 | code | `String` | | Reset Password Code, You will get reset password code from forgot password method | yes
-| password | `String` | | password| yes
+| password | `String` | | password | yes
 #### Change Password
 
 To change a user's password, use this method:
 ```ts
-authResetPassword({current_password: '',password: '',password_confirmation: ''});
+authChangePassword({
+    current_password: '',
+    password: '',
+    password_confirmation: ''
+});
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
@@ -126,21 +155,21 @@ password_confirmation | `string` | | | yes
 
 Retrieve user data with this method:
 ```ts
-    flexben.getUser();
+flexben.getUser();
 ```
 
 #### Update User Data
 To update user data, employ the following method:
 ```ts
 flexben.authUpdateUser({
-name:  '',
-email:  '',
-phone:  '',
-password:  '',
-password_confirmation:  '',
-gender:  '',
-birth_at:  '',
-avatar:  '',
+    name:  '',
+    email:  '',
+    phone:  '',
+    password:  '',
+    password_confirmation:  '',
+    gender:  '',
+    birth_at:  '',
+    avatar:  ''
 });
 ```
 | Param | Type | Default | description | Required
@@ -165,21 +194,29 @@ getPeriods();
 #### Get Current Period
 
 Fetch the current period with this method:
-
 ```ts
 getCurrentPeriod();
 ```
 
 #### Get Upcoming Period
+
 Retrieve information about the upcoming period using this method:
 ```ts
 flexben.getUpcomingPeriod();
 ```
+
 ### Enrollments
+
 #### Create Enrollment
+
 To create an enrollment, use this method:
 ```ts
-flexben.createEnrollment({ id:  '', period_id:  '', is_submitted:  '', benefit_items_ids: [] });
+flexben.createEnrollment({
+    id:  '',
+    period_id:  '',
+    is_submitted:  '',
+    benefit_items_ids: []
+});
 ```
 | Param | Type | Default | description | Required
 |--|--|--|--|--|
@@ -187,16 +224,19 @@ id | `string` | | | yes
 period_id | `string` | | | yes
 is_submitted | `string` | | | yes
 benefit_items_ids | `Array` of `benefit_item_id` ex: `[1,3,4,6]` | | | yes
+
 #### Get All Enrollments
+
 Retrieve all enrollments with this method:
 ```ts
 getEnrollments();
 ```
+
 #### Get Detail Enrollment
 Fetch details of a specific enrollment using this method:
 ```ts
 getDetailEnrollment({
-id:  '',
+    id:  '',
 });
 ```
 | Param | Type | Default | description | Required
@@ -204,19 +244,21 @@ id:  '',
 id | `string` | | | yes
 
 ### Claims
+
 #### Create Claim
+
 Create a claim using this method:
 ```ts
 createClaim({
-name:  '',
-merchant_name:  '',
-description:  '',
-amount:  '',
-period_id:  '',
-category_id:  '',
-transaction_at:  '',
-receipt:  '',
-documents:  '',
+    name:  '',
+    merchant_name:  '',
+    description:  '',
+    amount:  '',
+    period_id:  '',
+    category_id:  '',
+    transaction_at:  '',
+    receipt:  '',
+    documents:  ''
 });
 ```
 | Param | Type | Default | description | Required
@@ -307,7 +349,7 @@ flexben.getDetailClaim({
 
 Retrieve claim categories with this method:
 ```ts
-flexben.getDetailClaim({
+flexben.getClaimCategories({
     parent_id:  '',
     isParent:  bool,
 });
@@ -318,10 +360,11 @@ parent_id | `string | number` | | | yes
 isParent | `boolean` | | | no  
 
 ### Benefits
+
 #### Get All Benefits
 Retrieve all benefits with this method:
 ```ts
-    flexben.getAllBenefits();
+flexben.getAllBenefits();
 ```
 
 #### Get Benefit Based on Period
@@ -340,7 +383,7 @@ id | `string | number` | | | yes
 #### Get Point
 Retrieve points information with this method:
 ```ts
-    flexben.getPoint();
+flexben.getPoint();
 ```
 
 ### Others
@@ -349,7 +392,7 @@ Retrieve points information with this method:
 
 Retrieve all frequently asked questions with this method:
 ```ts
-    flexben.getFaq();
+flexben.getFaq();
 ```
 
 Explore the full potential of the Flexben SDK and enhance your development capabilities within the Flexben platform.
