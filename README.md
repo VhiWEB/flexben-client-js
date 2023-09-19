@@ -27,8 +27,9 @@ To initialize the SDK, you need to have authorized client access by getting the 
 ```ts
 const flexben = new Flexben();
 flexben.init({
-  clientId:  'YOUR_CLIENT_ID', // Type: String | Mandatory: Yes | Nullable: No
-  clientSecret:  'YOUR_CLIENT_SECRET', // Type: String | Mandatory: Yes | Nullable: No
+    clientId:  'YOUR_CLIENT_ID', // Type: String | Mandatory: Yes | Nullable: No
+    clientSecret:  'YOUR_CLIENT_SECRET', // Type: String | Mandatory: Yes | Nullable: No
+    grantType: 'YOUR_GRANT_TYPE'  // Type: String | Mandatory: No | Nullable: No
 })
 ```
 
@@ -38,15 +39,15 @@ flexben.init({
 Authenticate a user by providing their username and password: Output:
 ```ts
 flexben.authLogin({
- username:  'email@example.com',
- password:  'secret12345',
+    username:  'email@example.com',
+    password:  'secret12345',
 })
 .then(token  => {
- console.log(`Your access token: ${token.accessToken}`);
- console.log(`Expiration: ${token.expiry}`);
+    console.log(`Your access token: ${token.accessToken}`);
+    console.log(`Expiration: ${token.expiry}`);
 })
 .catch(e  => {
- console.error(`Login failed: ${e.message}`);
+    console.error(`Login failed: ${e.message}`);
 });
 ```
 
@@ -56,8 +57,8 @@ flexben.authLogin({
 Retrieve user data with this method:
 ```ts
 flexben.getUser().then(user  => {
-  console.log(`Name: ${user.name}`);
-  console.log(`Email: ${user.email}`);
+    console.log(`Name: ${user.name}`);
+    console.log(`Email: ${user.email}`);
 });
 ```
 
@@ -65,21 +66,24 @@ flexben.getUser().then(user  => {
 Fetch the current period with this method:
 ```ts
 flexben.getCurrentPeriod().then(period  => {
-  console.log(`ID: ${period.id}`);
-  console.log(`Name: ${period.name}`);
-  console.log(`Enrolled?: ${period.enrolled  ?  'Yes'  :  'No'}`);
+    console.log(`ID: ${period.id}`);
+    console.log(`Name: ${period.name}`);
+    console.log(`Enrolled?: ${period.enrolled  ?  'Yes'  :  'No'}`);
 });
 ```
 #### Get Available Benefits
-#### Submit Enrollment
+#### Create Enrollment
 To create an enrollment, use this method:
 ```ts
-flexben.submitEnrollment({
-period_id:  41,
-benefit_items_ids: [7, 28, 43, 81]
-})
-.then(enrollment  => {
+flexben.createEnrollment({
+    period_id:  41,
+    period_id: 4,
+    is_submitted: true,
+    benefit_items_ids: [7, 28, 43, 81]
+}).then(enrollment => {
 console.log(
+    console.log(`Enrollment: ${enrollment}`);
+)}
 ```
 ## Reference
 #### authLogin
